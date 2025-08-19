@@ -90,8 +90,8 @@
 let votos = Array(OPTIONS.length).fill(0);
 let yaVoto = false;
 
-// URL de tu backend (si lo probás en tu PC es localhost:3000)
-const API_URL = "http://localhost:3000";
+
+const API_URL = "https://semana-del-estudiante.onrender.com";
 
 async function fetchResults() {
   const res = await fetch(`${API_URL}/resultados`);
@@ -167,4 +167,5 @@ fetchResults();
 
 </body>
 </html>
+
 
