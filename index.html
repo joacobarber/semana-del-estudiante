@@ -87,21 +87,22 @@
 
 <script>
     const OPTIONS = ['PRIMER AÑO', 'SEGUNDO AÑO', 'TERCER AÑO', 'CUARTO AÑO', 'QUINTO AÑO'];
-  let votos = Array(OPTIONS.length).fill(0);
+let votos = Array(OPTIONS.length).fill(0);
 let yaVoto = false;
 
-// === Pedir resultados acumulados al backend ===
+// URL de tu backend (si lo probás en tu PC es localhost:3000)
+const API_URL = "http://localhost:3000";
+
 async function fetchResults() {
-  const res = await fetch("http://localhost:3000/resultados"); // 🔴 poné tu dominio o IP si no es local
+  const res = await fetch(`${API_URL}/resultados`);
   const data = await res.json();
   votos = data.resultados.map(r => r.cantidad);
   renderResults();
 }
 
-// === Enviar voto al backend ===
 async function votar(indice) {
   if (yaVoto) return;
-  const res = await fetch("http://localhost:3000/votar", {  // 🔴 igual que arriba
+  const res = await fetch(`${API_URL}/votar`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ optionId: indice + 1 })
@@ -110,7 +111,7 @@ async function votar(indice) {
   if (data.ok) {
     yaVoto = true;
     alert("¡Gracias por votar!");
-    fetchResults(); // refrescar resultados acumulados
+    fetchResults();
     renderOptions();
   } else {
     alert("Error: " + data.error);
@@ -166,3 +167,4 @@ fetchResults();
 
 </body>
 </html>
+
